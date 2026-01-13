@@ -1,0 +1,244 @@
+"use client";
+
+import { Backpack, MessageCircle, Menu, X, User, Settings, Briefcase, LogOut, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import ThemeToggle from "@/components/shared/themeToggle";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const Header = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    // 🔴 Por ahora sin auth real
+    const user = null; // o { name: "Juan" }
+
+    const pathname = usePathname();
+    const router = useRouter();
+
+    const navLinks = [
+        { href: "/", label: "Inicio" },
+        { href: "/paquetes", label: "Paquetes" },
+        { href: "/nosotros", label: "Nosotros" },
+        { href: "/contacto", label: "Contacto" },
+    ];
+
+    const isActive = (path: string) => pathname === path;
+
+    const displayName = "Usuario";
+
+    const getInitials = (name: string) => {
+        return (
+            name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+                .toUpperCase()
+                .slice(0, 2) || "U"
+        );
+    };
+
+    const handleLogout = () => {
+        router.push("/");
+    };
+
+    return (
+        <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border shadow-sm">
+            <div className="container mx-auto px-4">
+                <div className="flex items-center justify-between h-16 md:h-20">
+
+                    {/* Logo */}
+                    <Link href="/" className="flex items-center gap-2 group">
+                        <div className="w-10 h-10 md:w-12 md:h-12 gradient-hero rounded-xl flex items-center justify-center shadow-glow group-hover:scale-105 transition-transform">
+                            <Backpack className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-lg md:text-xl font-bold text-foreground">
+                                PromoTrip <span className="text-primary">AI</span>
+                            </span>
+                            <span className="text-[10px] md:text-xs text-muted-foreground -mt-1">
+                                Viajes Estudiantiles
+                            </span>
+                        </div>
+                    </Link>
+
+                    {/* Desktop Navigation */}
+                    <nav className="hidden lg:flex items-center gap-1">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive(link.href)
+                                    ? "bg-primary/20 text-primary"
+                                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                                    }`}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                    </nav>
+
+                    {/* Desktop Actions */}
+                    <div className="hidden lg:flex items-center gap-3">
+                        <ThemeToggle />
+
+                        <Link href="/proveedor">
+                            <Button variant="ghost" size="icon" className="rounded-full">
+                                <Briefcase className="w-4 h-4" />
+                            </Button>
+                        </Link>
+
+                        <Link href="/admin">
+                            <Button variant="ghost" size="icon" className="rounded-full">
+                                <Settings className="w-4 h-4" />
+                            </Button>
+                        </Link>
+
+                        {user ? (
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" className="gap-2 px-2">
+                                        <Avatar className="w-8 h-8">
+                                            <AvatarFallback className="text-xs bg-primary text-primary-foreground">
+                                                {getInitials(displayName)}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="w-48">
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/perfil">Mi Perfil</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem
+                                        onClick={handleLogout}
+                                        className="text-destructive cursor-pointer"
+                                    >
+                                        <LogOut className="w-4 h-4 mr-2" />
+                                        Cerrar sesión
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        ) : (
+                            <Link href="/auth">
+                                <Button variant="ghost" size="sm" className="gap-2">
+                                    <User className="w-4 h-4" />
+                                    Ingresar
+                                </Button>
+                            </Link>
+                        )}
+
+                        <Button variant="turquoise" size="sm" className="gap-2">
+                            <MessageCircle className="w-4 h-4" />
+                            Hablar con IA
+                        </Button>
+                    </div>
+
+                    {/* Mobile & Tablet Menu Button */}
+                    <button
+                        className="lg:hidden p-2 rounded-lg hover:bg-muted transition-colors"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        aria-label="Toggle menu"
+                    >
+                        {isMenuOpen ? (
+                            <X className="w-6 h-6 text-foreground" />
+                        ) : (
+                            <Menu className="w-6 h-6 text-foreground" />
+                        )}
+                    </button>
+                </div>
+
+                {/* Mobile & Tablet Menu */}
+                {isMenuOpen && (
+                    <div className="lg:hidden py-4 border-t border-border animate-in slide-in-from-top duration-200">
+                        <nav className="flex flex-col gap-2 mb-4">
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className={`px-4 py-3 rounded-lg text-base font-medium transition-all ${isActive(link.href)
+                                        ? "bg-primary-light text-primary"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                                        }`}
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </nav>
+
+                        <div className="flex flex-col gap-2 pt-4 border-t border-border">
+                            <div className="flex items-center justify-between px-4 py-2">
+                                <span className="text-sm text-muted-foreground">Tema</span>
+                                <ThemeToggle />
+                            </div>
+
+                            <Link href="/proveedor" onClick={() => setIsMenuOpen(false)}>
+                                <Button variant="ghost" className="w-full justify-start gap-2">
+                                    <Briefcase className="w-4 h-4" />
+                                    Panel Proveedor
+                                </Button>
+                            </Link>
+
+                            <Link href="/admin" onClick={() => setIsMenuOpen(false)}>
+                                <Button variant="ghost" className="w-full justify-start gap-2">
+                                    <Settings className="w-4 h-4" />
+                                    Panel Admin
+                                </Button>
+                            </Link>
+
+                            {user ? (
+                                <>
+                                    <Link href="/perfil" onClick={() => setIsMenuOpen(false)} className="w-full">
+                                        <Button variant="outline" className="w-full justify-start gap-2">
+                                            <Avatar className="w-6 h-6">
+                                                <AvatarFallback className="text-xs bg-primary text-primary-foreground">
+                                                    {getInitials(displayName)}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            Mi Perfil
+                                        </Button>
+                                    </Link>
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full justify-start gap-2 text-destructive hover:text-destructive"
+                                        onClick={() => {
+                                            handleLogout();
+                                            setIsMenuOpen(false);
+                                        }}
+                                    >
+                                        <LogOut className="w-4 h-4" />
+                                        Cerrar sesión
+                                    </Button>
+                                </>
+                            ) : (
+                                <Link href="/auth" onClick={() => setIsMenuOpen(false)} className="w-full">
+                                    <Button variant="outline" className="w-full justify-start gap-2">
+                                        <User className="w-4 h-4" />
+                                        Ingresar
+                                    </Button>
+                                </Link>
+                            )}
+
+                            <Button variant="turquoise" className="w-full gap-2">
+                                <MessageCircle className="w-4 h-4" />
+                                Hablar con IA
+                            </Button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </header>
+    );
+};
+
+export default Header;
