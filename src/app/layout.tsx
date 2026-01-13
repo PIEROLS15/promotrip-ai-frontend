@@ -1,12 +1,10 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Nunito } from 'next/font/google'
+import { Nunito } from "next/font/google"
 import { GeistMono } from "geist/font/mono"
-import { Analytics } from "@vercel/analytics/next"
-import { Suspense } from "react"
+// import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Loader } from "@/components/loader"
+import { AppProviders } from "@/components/app-providers"
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -22,18 +20,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang="es">
       <body className={`font-sans ${nunito.variable} ${GeistMono.variable}`}>
-        <ThemeProvider>
-          <Suspense fallback={<Loader />}>
-            {children}
-          </Suspense>
-          <Analytics />
-        </ThemeProvider>
+        <AppProviders>
+          {children}
+          {/* <Analytics /> */}
+        </AppProviders>
       </body>
     </html>
   )

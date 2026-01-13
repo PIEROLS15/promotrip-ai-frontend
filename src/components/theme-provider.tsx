@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { createContext, useContext, useEffect, useState } from "react"
-import { Header } from "@/components/header"
 
 type Theme = "light" | "dark"
 
@@ -47,7 +46,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            <Header />
             {children}
         </ThemeContext.Provider>
     )

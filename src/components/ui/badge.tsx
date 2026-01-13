@@ -17,6 +17,15 @@ const badgeVariants = cva(
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+
+        // PromoTrip AI Custom Variants - Solid backgrounds
+        turquoise: "border-transparent bg-primary text-primary-foreground font-bold",
+        orange: "border-transparent bg-secondary text-secondary-foreground font-bold",
+        success: "border-transparent bg-emerald-500 text-white font-bold",
+        verified: "border-transparent bg-primary text-primary-foreground gap-1",
+        price: "border-transparent bg-secondary text-white text-sm font-bold px-4 py-1.5",
+        duration: "border-transparent bg-card text-foreground gap-1 shadow-sm",
+        category: "border-transparent bg-primary text-primary-foreground font-bold",
       },
     },
     defaultVariants: {
