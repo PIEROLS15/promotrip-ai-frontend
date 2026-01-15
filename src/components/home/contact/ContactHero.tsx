@@ -5,7 +5,7 @@ const ContactHero = () => {
   return (
     <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
-        <img
+        <Image
           src="/hero-contacto.jpg"
           alt="Equipo de atención al cliente"
           className="object-cover"

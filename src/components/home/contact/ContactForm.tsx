@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Send, CheckCircle2 } from "lucide-react";
 import { useContact } from "@/hooks/useContact";
+import type { ApiError } from "@/types/api";
 
 const ContactForm = () => {
   const { createContact } = useContact();
@@ -39,13 +40,15 @@ const ContactForm = () => {
         subject: "",
         message: "",
       });
-    } catch (err: any) {
-      if (err?.errors) {
-        setFieldErrors(err.errors);
-      } else {
-        setError(err?.message || "Error al enviar mensaje");
-      }
-    } finally {
+    } catch (err: unknown) {
+        const apiError = err as ApiError;
+
+        if (apiError?.errors) {
+          setFieldErrors(apiError.errors);
+        } else {
+          setError(apiError?.message || "Error al enviar mensaje");
+  }
+} finally {
       setIsSubmitting(false);
     }
   };
