@@ -5,17 +5,49 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Send, CheckCircle2 } from "lucide-react";
+import { useContact } from "@/hooks/useContact";
 
 const ContactForm = () => {
+  const { createContact } = useContact();
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setError(null);
+    setFieldErrors({});
+
+    try {
+      await createContact(form);
+      setIsSubmitted(true);
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } catch (err: any) {
+      if (err?.errors) {
+        setFieldErrors(err.errors);
+      } else {
+        setError(err?.message || "Error al enviar mensaje");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -32,16 +64,55 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <Input placeholder="Nombre completo" required />
-      <Input type="email" placeholder="Correo electrónico" required />
-      <Input placeholder="Teléfono" />
-      <Input placeholder="Asunto" required />
+      <div>
+        <Input
+          placeholder="Nombre completo"
+          required
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+        {fieldErrors.name && (
+          <p className="text-red-500 text-sm">{fieldErrors.name[0]}</p>
+        )}
+      </div>
+
+      <div>
+        <Input
+          type="email"
+          placeholder="Correo electrónico"
+          required
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+        {fieldErrors.email && (
+          <p className="text-red-500 text-sm">{fieldErrors.email[0]}</p>
+        )}
+      </div>
+
+      <Input
+        placeholder="Teléfono"
+        value={form.phone}
+        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+      />
+
+      <Input
+        placeholder="Asunto"
+        required
+        value={form.subject}
+        onChange={(e) => setForm({ ...form, subject: e.target.value })}
+      />
+
       <textarea
         className="w-full rounded-xl border p-3"
         rows={5}
         placeholder="Mensaje"
         required
+        value={form.message}
+        onChange={(e) => setForm({ ...form, message: e.target.value })}
       />
+
+      {error && <p className="text-red-600 text-sm">{error}</p>}
+
       <Button className="w-full gap-2" disabled={isSubmitting}>
         <Send size={16} /> {isSubmitting ? "Enviando..." : "Enviar mensaje"}
       </Button>
