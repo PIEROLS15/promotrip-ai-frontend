@@ -1,12 +1,14 @@
-name: CI for PromoTrip AI
+name: CI for GoPromo AI
 
 on:
   push:
-    branches: 
-    - main
+    branches:
+      - main
+      - dev
   pull_request:
-    branches: 
-    - main
+    branches:
+      - main
+      - dev
 
 jobs:
   lint_build:
@@ -20,8 +22,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci

@@ -19,17 +19,15 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 overflow-hidden relative">
-      {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-soft" />
         <div
           className="absolute bottom-1/4 -right-32 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse-soft"
           style={{ animationDelay: "1s" }}
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-accent/5 rounded-full blur-3xl" />
       </div>
 
-      {/* Floating icons decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <MapPin
           className="absolute top-[15%] left-[10%] w-8 h-8 text-primary/20 animate-float"
@@ -49,13 +47,11 @@ const NotFound = () => {
         />
       </div>
 
-      {/* Main content */}
       <div className="relative z-10 text-center max-w-lg mx-auto">
-        {/* Glass card */}
+
         <div className="bg-card/50 backdrop-blur-xl border border-border/50 rounded-3xl p-8 md:p-12 shadow-2xl">
-          {/* 404 */}
           <div className="relative mb-6">
-            <h1 className="text-[120px] md:text-[160px] font-bold leading-none bg-gradient-to-br from-primary via-primary/80 to-secondary bg-clip-text text-transparent select-none">
+            <h1 className="text-[120px] md:text-[160px] font-bold leading-none bg-linear-to-br from-primary via-primary/80 to-secondary bg-clip-text text-transparent select-none">
               404
             </h1>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
