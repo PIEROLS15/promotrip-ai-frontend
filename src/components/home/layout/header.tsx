@@ -18,17 +18,16 @@ import {
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // 🔴 Por ahora sin auth real
-    const user = null; // o { name: "Juan" }
+    const user = null;
 
     const pathname = usePathname();
     const router = useRouter();
 
     const navLinks = [
         { href: "/", label: "Inicio" },
-        { href: "/paquetes", label: "Paquetes" },
-        { href: "/nosotros", label: "Nosotros" },
-        { href: "/contacto", label: "Contacto" },
+        { href: "/packages", label: "Paquetes" },
+        { href: "/about", label: "Nosotros" },
+        { href: "/contact", label: "Contacto" },
     ];
 
     const isActive = (path: string) => pathname === path;
