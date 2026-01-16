@@ -8,6 +8,7 @@ const ContactHero = () => {
         <Image
           src="/hero-contacto.jpg"
           alt="Equipo de atención al cliente"
+          fill
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 to-foreground/50" />
