@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import ContactHero from "@/components/home/contact/ContactHero";
-import ContactInfoGrid from "@/components/home/contact/ContactInfoGrid";
-import ContactForm from "@/components/home/contact/ContactForm";
-import FAQSection from "@/components/home/contact/FAQSection";
-import AIChatSection from "@/components/home/contact/AIChatSection";
+import ContactHero from "@/components/home/contact/contactHero";
+import ContactInfoGrid from "@/components/home/contact/contactInfoGrid";
+import ContactForm from "@/components/home/contact/contactForm";
+import FAQSection from "@/components/home/contact/faqSection";
+import AIChatSection from "@/components/home/contact/aiChatSection";
 
 export const metadata: Metadata = {
   title: "Contacto | GoPromo AI",
