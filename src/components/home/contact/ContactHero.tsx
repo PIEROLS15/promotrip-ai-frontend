@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 
 const ContactHero = () => {
   return (
-    <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-[50vh] min-h-100 flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
           src="/hero-contacto.jpg"
@@ -11,7 +11,7 @@ const ContactHero = () => {
           fill
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 to-foreground/50" />
+        <div className="absolute inset-0 bg-linear-to-b from-foreground/70 to-foreground/50" />
       </div>
 
       <div className="relative z-10 text-center px-4">

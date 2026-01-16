@@ -1,9 +1,6 @@
 import { apiFetch } from "./api";
-import {
-  Contact,
-  CreateContactPayload,
-  ApiSuccessResponse,
-} from "@/types/contact";
+import { Contact, CreateContactPayload } from "@/types/contact";
+import { ApiSuccessResponse } from "@/types/api";
 
 export const ContactService = {
   create: (payload: CreateContactPayload) =>

@@ -6,7 +6,7 @@ import FAQSection from "@/components/home/contact/FAQSection";
 import AIChatSection from "@/components/home/contact/AIChatSection";
 
 export const metadata: Metadata = {
-  title: "Contacto | PromoTrip AI",
+  title: "Contacto | GoPromo AI",
 };
 
 export default function ContactPage() {
